@@ -1,7 +1,7 @@
-from .data_quality import missing_percentage, handle_missing, duplicate_rows
-from .outliers import cap_outliers
-from .feature_analysis import numeric_target_relation, categorical_target_relation
-from .preprocessing import normalize
+from data_quality import missing_percentage, handle_missing, duplicate_rows
+from outliers import cap_outliers
+from feature_analysis import numeric_target_relation, categorical_target_relation
+from preprocessing import normalize
 
 def full_eda(df, target):
     insights = {}
