@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Custom modules
+# Custom modules 
 from data_quality import missing_percentage, handle_missing, duplicate_rows
 from outliers import cap_outliers
 from feature_analysis import numeric_target_relation, categorical_target_relation
@@ -18,12 +18,14 @@ def auto_detect_target(df):
         for kw in keywords:
             if kw in col.lower():
                 return col
-    return numeric_cols[-1] 
+    return numeric_cols[-1]  
+
 
 # Plot categorical features vs target
 def plot_categorical_vs_target(df, target):
     cat_cols = df.select_dtypes(include='object').columns.tolist()
 
+    # Treat numeric columns with <=10 unique values as categorical
     num_cols = df.select_dtypes(include='number').columns
     for col in num_cols:
         if df[col].nunique() <= 10 and col != target:
@@ -33,16 +35,30 @@ def plot_categorical_vs_target(df, target):
         print("No categorical columns for plotting.")
         return
 
-    for col in cat_cols:
-        plt.figure(figsize=(6,4))
-        sns.barplot(x=col, y=target, data=df)
-        plt.title(f"{col} vs {target}")
-        plt.xlabel(col)
-        plt.ylabel(target)
+    plt.style.use('dark_background')
+    palette = sns.color_palette(["#FF6F61", "#6B5B95", "#982598", "#F075AE", "#FFD700"])  # bright colors
+
+    for idx, col in enumerate(cat_cols):
+        plt.figure(figsize=(7,5))
+        color = palette[idx % len(palette)]
+        ax = sns.barplot(x=col, y=target, data=df, color=color, edgecolor='white')
+
+        for p in ax.patches:
+            height = p.get_height()
+            ax.annotate(f'{height:.1f}', 
+                        (p.get_x() + p.get_width() / 2., height), 
+                        ha='center', va='bottom', fontsize=10, color='white', fontweight='bold')
+
+        # Customize the plot
+        plt.title(f"{col} vs {target}", fontsize=14, fontweight='bold', color='white')
+        plt.xlabel(col, fontsize=12, color='white')
+        plt.ylabel(target, fontsize=12, color='white')
+        plt.xticks(rotation=30, color='white')
+        plt.yticks(color='white')
         plt.tight_layout()
         plt.show()
 
-# Full EDA function
+# Full EDA Function
 def full_eda(df, target=None):
     df = df.copy()
     
@@ -57,8 +73,8 @@ def full_eda(df, target=None):
     insights["missing_percent"] = missing_percentage(df)
     insights["duplicates"] = duplicate_rows(df)
     df = handle_missing(df, strategy="mean")
-
-    # Outliers – cap numeric features
+    
+    # Outliers
     for col in df.select_dtypes(include="number"):
         df[col] = cap_outliers(df[col])
 
