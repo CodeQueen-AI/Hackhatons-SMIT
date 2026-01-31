@@ -1,13 +1,11 @@
-# 📊 Smart EDA & Statistics Python Library
+# 🤖 Automatic & Generative EDA Tool for Any Dataset
+
+A *fully automatic Python EDA & statistics library* that works on **any dataset**. Handles **missing values, outliers, feature-target analysis, and visualizations** in one run. Get **cleaned data, insights, and plots** ready for AI/ML modeling
 
 ## 🔹 Project Overview
 
-In real-world AI and data science projects, datasets are rarely clean or ready for modeling
-They often contain *missing values, outliers, irrelevant features* and *unclear relationships*with the target variable. 
-
-This project is a *reusable Python library* that performs *full Exploratory Data Analysis (EDA) and statistical analysis* on any dataset
-It automatically handles *data quality, outliers, feature-target relationships* and prepares datasets for AI/ML models
-*Includes automatic target column detection* saving time in preprocessing
+Datasets are rarely clean—often containing **missing values, outliers, irrelevant features, and unclear target relationships**.
+This **reusable library** performs **full EDA and statistical analysis**, automatically handling **data quality, outliers, and feature-target relationships**, with **automatic target detection** for faster preprocessing.
 
 
 ## 🎯 Objectives
