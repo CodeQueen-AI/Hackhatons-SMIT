@@ -11,3 +11,9 @@ def median(data):
 # Mode Function
 def mode(data):
     return max(set(data), key=data.count)
+
+# Variance
+def variance(data):
+    return np.var(data, ddof=1)
+
+# 
