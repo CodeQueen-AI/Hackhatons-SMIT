@@ -19,3 +19,4 @@ def variance(data):
 # Standard Deviation
 def standard_deviation(data):
     return np.std(data, ddof=1)
+
