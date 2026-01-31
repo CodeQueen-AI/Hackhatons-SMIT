@@ -16,4 +16,6 @@ def mode(data):
 def variance(data):
     return np.var(data, ddof=1)
 
-# 
+# Standard Deviation
+def standard_deviation(data):
+    return np.std(data, ddof=1)
