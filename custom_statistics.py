@@ -10,15 +10,10 @@ def mean(data):
 def median(data):
     return np.median(data)
 
-# Mode Function
-# def mode(data):
-#     return max(set(data), key=data.count)
-
 def mode(data):
     if isinstance(data, (list, np.ndarray)):
         data = pd.Series(data)
     return data.mode()[0]
-
 
 # Variance
 def variance(data):
@@ -46,4 +41,3 @@ def t_test(sample1, sample2):
 def chi_square_test(observed_data):
     chi2, p, dof, expected = stats.chi2_contingency(observed_data)
     return chi2, p
-
