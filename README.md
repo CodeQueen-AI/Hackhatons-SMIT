@@ -1,97 +1,195 @@
-# 🤖 Automatic & Generative EDA Tool for Any Dataset
+# Smart EDA Library
 
-A *fully automatic Python EDA & statistics library* that works on **any dataset**. Handles **missing values, outliers, feature-target analysis, and visualizations** in one run. Get **cleaned data, insights, and plots** ready for AI/ML modeling
+A comprehensive Python library for automated Exploratory Data Analysis (EDA) and statistical analysis. Designed to help data scientists and AI practitioners quickly understand data quality, feature relationships, and prepare datasets for machine learning models.
 
-## 🔹 Project Overview
+## 🚀 Features
 
-Datasets are rarely clean—often containing **missing values, outliers, irrelevant features, and unclear target relationships**.
-This **reusable library** performs **full EDA and statistical analysis**, automatically handling **data quality, outliers, and feature-target relationships**, with **automatic target detection** for faster preprocessing.
+- **Automated EDA**: Perform comprehensive analysis with a single function call
+- **Statistical Analysis**: Mean, median, mode, variance, standard deviation, and advanced statistics
+- **Distribution Analysis**: Normal distribution functions, skewness, kurtosis
+- **Hypothesis Testing**: Z-test, T-test, Chi-square test
+- **Data Cleaning**: Missing value detection/handling, outlier detection/removal
+- **Feature Analysis**: Correlation analysis, feature importance ranking
+- **Rich CLI Interface**: Colorful, interactive command-line interface
+- **Mixed Data Types**: Handles both numeric and categorical variables
+- **Visualizations**: Comprehensive plots and charts using matplotlib and seaborn
 
+## 📋 Requirements
 
-## 🎯 Objectives
+- Python 3.13+
+- Dependencies managed with `uv`
 
-- Build reusable Python functions for **statistics*:
-  - Mean, Median, Mode 🧮
-  - Variance, Standard Deviation 📈
-  - Z-score, Z-test, T-test, Chi-square test
-  - Probability calculations, Normal distribution functions
+## 🛠️ Installation
 
-- Handle **data quality**:
-  - Detect missing values and duplicates 📝
-  - Handle missing data using mean/median/mode or row deletion
-  - Detect and handle outliers (Z-score / IQR method)
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd sn-smarteda
+```
 
-- Analyze **features vs target**:
-  - Numeric features: correlation and top important features
-  - Categorical features: group statistics and chi-square tests
-  - Automatically generate **categorical bar plots** 📊
+2. Install dependencies using uv:
+```bash
+uv sync
+```
 
-- **Auto-detect target column** for faster workflow ⚡
-  - Automatically identifies numeric target columns (like score, marks, target, y)
-  - Fallback to last numeric column if no keyword match
-  - Makes EDA faster and more efficient
+## 📊 Usage
 
-- Return:
-  - Cleaned dataset ✅
-  - Summary of insights 💡
-  - Visualizations 📈
+### Command Line Interface
 
+Place your dataset as `data.csv` in the project root and run:
 
-## ⚙️ How It Works
+```bash
+# Interactive mode
+python main.py
 
-1. **Load Dataset**  
-   The library works on any CSV dataset
+# Or specify target column directly
+python main.py "target_column_name"
 
-2. **Run Full EDA**  
-   - Automatically detects the target column ⚡ ✅  
-   - Handles missing values and duplicates  
-   - Detects outliers and caps them  
-   - Computes statistics on the target: mean, median, mode, std, skewness  
-   - Computes numeric feature correlations and ranks top features  
-   - Computes categorical feature relations using chi-square tests  
-   - Normalizes the target for modeling  
-   - Plots categorical features vs target  
+# With visualizations (using --viz or -v flag)
+python main.py "target_column_name" --viz
+# or
+python main.py "target_column_name" -v
+```
 
-3. **Get Insights and Cleaned Dataset**  
-   - Summary of relationships between features and target  
-   - List of top important features  
-   - Dataset cleaned, normalized, and ready for ML
+### Programmatic Usage
 
-## Features Implemented
+```python
+import pandas as pd
+from src.eda.full_eda import full_eda
 
-| Feature                                      | Status |
-| -------------------------------------------- | ------ |
-| Mean, Median, Mode                           | ✅      |
-| Variance & Standard Deviation                | ✅      |
-| Z-score                                      | ✅      |
-| Z-test, T-test, Chi-square test              | ✅      |
-| Missing Value Detection & Handling           | ✅      |
-| Duplicate Rows Detection                     | ✅      |
-| Outlier Detection & Handling (Z-score / IQR) | ✅      |
-| Numeric Feature vs Target Analysis           | ✅      |
-| Categorical Feature vs Target Analysis       | ✅      |
-| **Auto-detect Target Column**                | ✅      |
-| Normalize / Transform Target                 | ✅      |
-| Top Important Features                       | ✅      |
-| Plots: Categorical Features vs Target        | ✅      |
+# Load your dataset
+df = pd.read_csv("your_dataset.csv")
 
+# Run full EDA analysis
+clean_df, insights = full_eda(df, target="your_target_column")
 
+# Access insights
+print(insights["missing"])          # Missing value percentages
+print(insights["correlation"])      # Correlations with target
+print(insights["top_features"])     # Top important features
+print(insights["outliers"])         # Outlier detection results
 
-## 💡 Benefits
+# Generate visualizations
+clean_df, insights = full_eda(df, target="your_target_column", generate_viz=True, viz_save_path="my_plots")
+```
 
-- **Data Cleaning:** Handles missing values and outliers automatically  
-- **Feature Insights:** Identifies features most correlated with the target  
-- **Automatic Target Detection:** Saves preprocessing time and ensures correct target selection ⚡  
-- **Statistical Testing:** Provides hypothesis testing functions  
-- **Visualization:** Helps understand categorical feature relationships  
-- **Ready for Modeling:** Returns cleaned, normalized dataset for AI/ML  
+### Visualization Capabilities
 
+The library generates the following visualizations:
 
+- **Missing Values Plot**: Bar chart showing percentage of missing values per column
+- **Target Distribution Plot**: Histogram and box plot for numeric targets, bar chart for categorical targets
+- **Correlation Heatmap**: Heatmap showing correlations between top features
+- **Top Features Plot**: Horizontal bar chart showing feature importance based on correlation
+- **Categorical Relationships Plot**: Box plots showing relationship between categorical features and target
+- **Outliers Plot**: Box plots for detecting outliers in numerical features
 
-## 🚀 Conclusion
+## 🏗️ Project Structure
 
-This library provides a *fully automated, reusable EDA pipeline* for any dataset  
-It simplifies understanding data quality, feature importance, and statistical relationships, while preparing datasets for AI/ML modeling.  
-*Automatic target detection* makes it even faster and hackathon-ready.
+```
+src/
+├── cleaning/           # Data cleaning utilities
+│   ├── missing_values.py     # Missing value handling
+│   ├── outliers.py          # Outlier detection and handling
+│   └── duplicates.py        # Duplicate detection
+├── eda/                # Main EDA orchestration
+│   └── full_eda.py         # Complete EDA pipeline
+├── features/           # Feature analysis
+│   ├── relationships.py     # Feature relationships
+│   └── importance.py        # Feature importance ranking
+├── statistics/         # Statistical functions
+│   ├── basic_stats.py       # Mean, median, mode, etc.
+│   ├── distributions.py     # Distribution functions
+│   └── hypothesis_tests.py  # Statistical tests
+└── visualization/      # Visualization capabilities
+    └── __init__.py         # Plotting functions and visualization generator
+```
 
-Hackathon-ready: quick insights, clean data and visualizations in one run 🎉
+## 🔧 Available Functions
+
+### Statistics Module
+- `mean(data)`, `median(data)`, `mode(data)`
+- `variance(data)`, `std_dev(data)`
+- `z_score(value, data)`
+- `pdf(x, mean, sd)`, `cdf(x, mean, sd)`
+- `analyze_distribution(data)` - Comprehensive distribution analysis
+
+### Data Cleaning Module
+- `missing_percentage(df)` - Calculate missing value percentages
+- `fill_missing(df, method="mean")` - Fill missing values
+- `detect_outliers_zscore(series)`, `detect_outliers_iqr(series)`
+- `remove_outliers_zscore(df, columns)`, `cap_outliers_iqr(df, columns)`
+- `detect_duplicates(df)`, `remove_duplicates(df)`
+
+### Feature Analysis Module
+- `numerical_relationship(df, target)` - Correlation analysis
+- `categorical_relationship(df, target)` - Categorical relationships
+- `top_features(correlation_series, n=10)` - Feature importance ranking
+
+## 📈 EDA Insights
+
+The `full_eda()` function returns comprehensive insights including:
+
+- **Missing Values**: Percentage of missing values per column
+- **Target Distribution**: Mean, std dev, skewness, kurtosis for numeric targets
+- **Outliers**: Detection results for numerical columns
+- **Correlations**: Relationships between features and target
+- **Top Features**: Ranked list of most important features
+- **Categorical Relationships**: Group statistics for categorical features
+
+## 💡 Example Output
+
+```
++-------------------+
+| SMART EDA LIBRARY |
++-------------------+
+AUTO EDA STARTED
+
+[OK] Dataset loaded successfully.
+
+Columns in your dataset:
+                   Dataset Columns
++----------------------------------------------------+
+| #   | Column Name                      | Data Type |
+|-----+----------------------------------+-----------|
+| 1   | Hours Studied                    |   float64 |
+| 2   | Previous Scores                  |   float64 |
+| 3   | Extracurricular Activities       |       str |
+| 4   | Sleep Hours                      |   float64 |
+| 5   | Sample Question Papers Practiced |   float64 |
+| 6   | Performance Index                |   float64 |
++----------------------------------------------------+
+
+Using target column from command line: Performance Index
+
+Running full EDA on target: Performance Index
+
+EDA Insights Summary:
+
++---------------------------------- MISSING ----------------------------------+
+| Hours Studied                       0.24                                    |
+| Previous Scores                     0.24                                    |
+| Extracurricular Activities          0.24                                    |
+| Sleep Hours                         0.24                                    |
+| Sample Question Papers Practiced    0.24                                    |
+| Performance Index                   0.24                                    |
++-----------------------------------------------------------------------------+
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Add tests if applicable
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Support
+
+For support, please open an issue in the repository or contact the maintainers.
