@@ -1,10 +1,17 @@
-# from statistics import mean, median, mode
+import pandas as pd
+from full_eda import full_eda
 
+# 1️⃣ Load CSV
+df = pd.read_csv("student_scores.csv")  # replace with your file
 
-# # df = pd.read_csv("student_performance.csv")
-# # clean_df, insights = full_eda(df, target="exam_score")
+# 2️⃣ Run Full EDA
+clean_df, insights = full_eda(df, target="score")
 
+# 3️⃣ Print Insights
+print("Insights:")
+for k, v in insights.items():
+    print(k, ":", v)
 
-# print("Mean:", mean(numbers))
-# print("Median:", median(numbers))
-# print("Mode:", mode(numbers))
+# 4️⃣ Show Cleaned Dataset
+print("\nCleaned DataFrame:")
+print(clean_df)

@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import stats
+import pandas as pd
 
 # Mean Function
 def mean(data):
@@ -10,8 +11,14 @@ def median(data):
     return np.median(data)
 
 # Mode Function
+# def mode(data):
+#     return max(set(data), key=data.count)
+
 def mode(data):
-    return max(set(data), key=data.count)
+    if isinstance(data, (list, np.ndarray)):
+        data = pd.Series(data)
+    return data.mode()[0]
+
 
 # Variance
 def variance(data):
@@ -28,7 +35,7 @@ def z_test(sample, population_mean):
     n = len(sample)
 
     z = (sample_mean - population_mean) / (sample_std / np.sqrt(n))
-    return 
+    return z
 
 # T-Test
 def t_test(sample1, sample2):

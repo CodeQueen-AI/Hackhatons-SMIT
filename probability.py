@@ -8,4 +8,3 @@ def z_score(value, mean, std):
 # Normal Distribution – PDF
 def normal_pdf(x, mean, std):
     return norm.pdf(x, mean, std)
-
