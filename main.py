@@ -2,7 +2,7 @@ import pandas as pd
 from full_eda import full_eda
 
 # 1️⃣ Load CSV
-df = pd.read_csv("student_scores.csv")  # replace with your file
+df = pd.read_csv("Student_Performance.csv")  # replace with your file
 
 # 2️⃣ Run Full EDA
 clean_df, insights = full_eda(df, target="score")
